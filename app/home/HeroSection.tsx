@@ -80,7 +80,7 @@ function BentoCard({ children, className = "", hasGlow = false }: BentoCardProps
 // ==========================================
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-zinc-950 text-slate-300 px-6 py-20 md:py-32 overflow-hidden">
+    <section className="relative min-h-[90vh] flex items-center justify-center bg-zinc-950 text-slate-300 px-6 py-12 md:py-20 overflow-hidden">
 
       {/* تأثير خلفية Glow عام هادي جداً */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-500/5 blur-[140px] rounded-full pointer-events-none" />

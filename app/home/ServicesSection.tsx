@@ -34,12 +34,12 @@ const services = [
 
 export default function ServicesSection() {
   return (
-    <section className="bg-zinc-950 py-24 md:py-32 relative overflow-hidden">
+    <section className="bg-zinc-950 py-16 md:py-24 relative overflow-hidden">
       {/* Background Glow */}
       <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-indigo-500/5 blur-[120px] rounded-full -translate-x-1/2 -translate-y-1/2" />
       
       <div className="container mx-auto px-6 relative z-10 max-w-7xl">
-        <div className="text-center mb-20">
+        <div className="text-center mb-12">
           <FadeIn direction="up">
             <h2 className="text-indigo-400 font-mono text-xs tracking-widest uppercase mb-4">02. Services</h2>
             <h3 className="text-3xl md:text-7xl font-black text-white tracking-tighter mb-6">
@@ -79,7 +79,7 @@ export default function ServicesSection() {
           ))}
         </div>
 
-        <div className="mt-20 text-center">
+        <div className="mt-12 text-center">
           <FadeIn direction="up" delay={0.4}>
             <Link 
               href="/services" 

@@ -46,7 +46,7 @@ const skills: Skill[] = [
 
 export default function AboutSection() {
   return (
-    <section id="about" className="relative min-h-screen bg-zinc-950 flex items-center py-20 px-6 overflow-hidden">
+    <section id="about" className="relative bg-zinc-950 flex items-center py-16 px-6 overflow-hidden">
       {/* تأثير خلفية مضيئة (Ambient Glow) */}
       <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-indigo-500/5 blur-[120px] rounded-full pointer-events-none -translate-x-1/2" />
       <div className="absolute bottom-1/3 right-0 w-[600px] h-[600px] bg-purple-500/5 blur-[120px] rounded-full pointer-events-none translate-x-1/3" />

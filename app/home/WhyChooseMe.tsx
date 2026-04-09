@@ -35,14 +35,14 @@ const values: Value[] = [
 
 export function WhyMeSection() {
   return (
-    <section id="why" className="bg-zinc-950 py-20 md:py-24 lg:py-32 overflow-hidden relative flex flex-col justify-center">
+    <section id="why" className="bg-zinc-950 py-16 md:py-20 overflow-hidden relative flex flex-col justify-center">
       
       {/* تأثير خلفية مضيئة (Ambient Glow) */}
       <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-indigo-500/5 blur-[120px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2" />
       <div className="absolute top-1/2 right-0 w-[600px] h-[600px] bg-purple-500/5 blur-[120px] rounded-full pointer-events-none translate-x-1/3 -translate-y-1/2" />
 
       <div className="container relative z-10 mx-auto max-w-7xl">
-        <FadeIn direction="up" className="text-center mb-16">
+        <FadeIn direction="up" className="text-center mb-10">
           <h2 className="text-indigo-400 font-mono text-sm tracking-widest uppercase mb-4">04. Strategy</h2>
           <h3 className="text-3xl md:text-7xl font-black text-white tracking-tighter">
             Why Work <span className="text-zinc-500 italic font-light">With Me?</span>

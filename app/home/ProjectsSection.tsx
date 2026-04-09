@@ -128,7 +128,7 @@ export default function ProjectsSection() {
   }, []);
 
   return (
-    <section id="projects" ref={container} className="relative bg-slate-950 py-10 min-h-screen">
+    <section id="projects" ref={container} className="relative bg-slate-950 py-16">
       <div className="container mx-auto px-6 text-center md:text-left">
         <FadeIn direction="up">
           <h2 className="text-sm font-bold tracking-[0.2em] text-indigo-500 uppercase mb-4 flex items-center justify-center md:justify-start gap-2">

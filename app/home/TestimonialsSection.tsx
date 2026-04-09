@@ -55,11 +55,11 @@ const testimonials: Testimonial[] = [
 
 export default function TestimonialsSection() {
   return (
-    <section className="bg-zinc-950 py-20 md:py-24 lg:py-32 flex flex-col justify-center overflow-hidden relative">
+    <section className="bg-zinc-950 py-16 md:py-20 flex flex-col justify-center overflow-hidden relative">
       <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-indigo-500/5 blur-[120px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2" />
       <div className="absolute top-1/2 right-0 w-[600px] h-[600px] bg-purple-500/5 blur-[120px] rounded-full pointer-events-none translate-x-1/3 -translate-y-1/2" />
 
-      <div className="container relative z-10 mx-auto px-6 mb-16 text-center">
+      <div className="container relative z-10 mx-auto px-6 mb-10 text-center">
         <FadeIn direction="up">
           <h2 className="text-indigo-400 font-mono text-sm tracking-widest uppercase mb-4 text-center">03. Feedback</h2>
           <h3 className="text-3xl md:text-7xl font-black text-white tracking-tighter">

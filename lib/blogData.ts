@@ -22,7 +22,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: "استكشاف أحدث ميزات Next.js 15 من تحسين الكاش إلى سرعة البناء الفائقة وتقنيات الرندرة الجديدة.",
     category: "Next.js",
     categoryAr: "نكست جي إس",
-    date: "٥ أبريل ٢٠٢٤",
+    date: "٥ أبريل ٢٠٢٦",
     readTime: "٦ دقائق قراءة",
     coverImage: "https://images.unsplash.com/photo-1618477388954-7852f32655ec?q=80&w=2000&auto=format&fit=crop",
     author: {
@@ -45,7 +45,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: "تعلم كيف تجعل موقعك يظهر في النتائج الأولى لمحركات البحث وكيفية تحسين الميتاداتا والأداء التقني.",
     category: "SEO",
     categoryAr: "تحسين المحركات",
-    date: "٢ أبريل ٢٠٢٤",
+    date: "٢ أبريل ٢٠٢٦",
     readTime: "٨ دقائق قراءة",
     coverImage: "https://plus.unsplash.com/premium_photo-1685283298465-e52e933a3312?q=80&w=2000&auto=format&fit=crop",
     author: {
@@ -66,7 +66,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: "دليلك لاستخدام واجهات OpenAI و Gemini لبناء ميزات ذكية تزيد من إنتاجية المستخدمين.",
     category: "AI",
     categoryAr: "ذكاء اصطناعي",
-    date: "٢٨ مارس ٢٠٢٤",
+    date: "٢٨ مارس ٢٠٢٦",
     readTime: "١٠ دقائق قراءة",
     coverImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2000&auto=format&fit=crop",
     author: {
@@ -84,7 +84,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: "لماذا تبدو بعض المواقع 'باهظة' والبعض الآخر بسيط؟ استكشاف المساحات، الخطوط، وتأثير الزجاج.",
     category: "Design",
     categoryAr: "تصميم",
-    date: "٢٥ مارس ٢٠٢٤",
+    date: "٢٥ مارس ٢٠٢٦",
     readTime: "٥ دقائق قراءة",
     coverImage: "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=2000&auto=format&fit=crop",
     author: {
@@ -103,7 +103,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: "التحول الجذري من الرندرة في المتصفح إلى الرندرة في الخادم (Server-First).",
     category: "React",
     categoryAr: "رياكت",
-    date: "٢٠ مارس ٢٠٢٤",
+    date: "٢٠ مارس ٢٠٢٦",
     readTime: "٧ دقائق قراءة",
     coverImage: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2000&auto=format&fit=crop",
     author: {
@@ -119,7 +119,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: "كيف تحصل على نتيجة ١٠٠/١٠٠ في اختبار Lighthouse وتحسن سرعة موقعك.",
     category: "Next.js",
     categoryAr: "أداء المواقع",
-    date: "١٥ مارس ٢٠٢٤",
+    date: "١٥ مارس ٢٠٢٦",
     readTime: "١٢ دقيقة قراءة",
     coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2000&auto=format&fit=crop",
     author: {
@@ -138,7 +138,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: "استكشاف القيم المخصصة، المكونات الإضافية، والواجهات المعقدة.",
     category: "Design",
     categoryAr: "تيلويند",
-    date: "١٠ مارس ٢٠٢٤",
+    date: "١٠ مارس ٢٠٢٦",
     readTime: "٤ دقائق قراءة",
     coverImage: "https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=2000&auto=format&fit=crop",
     author: {
@@ -154,7 +154,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: "خارطة الطريق الكاملة: نظام الدخول، قاعدة البيانات، ونظام الدفع.",
     category: "Next.js",
     categoryAr: "إطلاق مشاريع",
-    date: "٥ مارس ٢٠٢٤",
+    date: "٥ مارس ٢٠٢٦",
     readTime: "١٥ دقيقة قراءة",
     coverImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2000&auto=format&fit=crop",
     author: {
