@@ -25,7 +25,7 @@ export default function Navbar() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="fixed top-6 left-0 right-0 z-[100] flex justify-center px-4 pointer-events-none"
+      className="fixed top-6 left-0 right-0 z-[100] hidden md:flex justify-center px-4 pointer-events-none"
     >
       <div className="w-full max-w-2xl relative">
         {/* النافبار نفسه: واخد عرض محدد، حواف دائرية، وشفافية */}

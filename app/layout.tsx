@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./home/Navbar";
+import BottomTabNav from "./home/BottomTabNav";
 import Footer from "./home/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 
@@ -79,6 +80,7 @@ export default function RootLayout({
     >
       <body className="relative min-h-screen flex flex-col font-sans bg-zinc-950 text-zinc-50">
         <Navbar />
+        <BottomTabNav />
         <main className="flex-1">
           {children}
         </main>
