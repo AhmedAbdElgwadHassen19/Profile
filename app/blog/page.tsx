@@ -23,11 +23,34 @@ export default function BlogListingPage() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const featuredPosts = blogPosts.slice(0, 3);
   
-  const categoriesAr = ["الكل", "نكست جي إس", "رياكت", "ذكاء اصطناعي", "تصميم", "تحسين المحركات"];
+  // Dynamic categories extraction
+  const categoriesAr = ["الكل", ...Array.from(new Set(blogPosts.map(post => post.categoryAr)))];
 
   const filteredPosts = activeCategory === "الكل" 
     ? blogPosts 
     : blogPosts.filter(post => post.categoryAr === activeCategory);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 6;
+
+  // Reset page when category changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeCategory]);
+
+  const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+
+  const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+    // Smooth scroll to results
+    const element = document.getElementById("blog-listing");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   // Auto-slide functionality
   useEffect(() => {
@@ -115,7 +138,7 @@ export default function BlogListingPage() {
       </section>
 
       {/* 2. Listing & Filters Section */}
-      <section className="container mx-auto px-6 mt-16">
+      <section id="blog-listing" className="container mx-auto px-6 mt-16">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
            <FadeIn direction="up">
              <h3 className="text-2xl md:text-4xl font-black text-white tracking-tight italic">
@@ -143,7 +166,7 @@ export default function BlogListingPage() {
 
         {/* Blog Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-           {filteredPosts.map((post, index) => (
+           {currentPosts.map((post, index) => (
              <FadeIn key={post.slug} direction="up" delay={index * 0.1}>
                <Link href={`/blog/${post.slug}`} className="group block h-full">
                  <div className="relative h-full flex flex-col bg-zinc-900/10 border border-white/5 rounded-[2rem] overflow-hidden hover:bg-zinc-900/30 hover:border-indigo-500/20 transition-all duration-500">
@@ -196,6 +219,43 @@ export default function BlogListingPage() {
              </FadeIn>
            ))}
         </div>
+
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center gap-3 mt-16">
+            <button
+              onClick={() => currentPage > 1 && paginate(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="w-12 h-12 rounded-2xl border border-white/5 flex items-center justify-center text-zinc-500 hover:bg-white/5 hover:border-white/20 disabled:opacity-20 disabled:cursor-not-allowed transition-all"
+            >
+              <ChevronRight size={20} />
+            </button>
+
+            <div className="flex items-center gap-2">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
+                <button
+                  key={number}
+                  onClick={() => paginate(number)}
+                  className={`w-12 h-12 rounded-2xl border text-xs font-black transition-all duration-300 ${
+                    currentPage === number
+                      ? "bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.1)] scale-110"
+                      : "border-white/5 text-zinc-500 hover:border-white/20 hover:text-white"
+                  }`}
+                >
+                  {String(number).padStart(2, '0')}
+                </button>
+              ))}
+            </div>
+
+            <button
+              onClick={() => currentPage < totalPages && paginate(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="w-12 h-12 rounded-2xl border border-white/5 flex items-center justify-center text-zinc-500 hover:bg-white/5 hover:border-white/20 disabled:opacity-20 disabled:cursor-not-allowed transition-all"
+            >
+              <ChevronLeft size={20} />
+            </button>
+          </div>
+        )}
       </section>
 
       {/* 3. Newsletter Section - Translated */}
