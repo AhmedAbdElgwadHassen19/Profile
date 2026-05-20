@@ -5,6 +5,7 @@ import Navbar from "./home/Navbar";
 import BottomTabNav from "./home/BottomTabNav";
 import Footer from "./home/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop";
+import ChatWidget from "@/components/ChatWidget";
 
 // 1. إعداد الخطوط - ربطنا Jakarta بمتغير --font-geist-sans عشان يقرأ من globals.css اللي عندك
 const jakarta = Plus_Jakarta_Sans({
@@ -86,6 +87,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <ScrollToTop />
+        <ChatWidget />
       </body>
     </html>
   );

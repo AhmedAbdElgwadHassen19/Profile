@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaPlus, FaEdit, FaTrash, FaSave, FaTimes, FaSignOutAlt, FaLock } from 'react-icons/fa';
-import { projectsAPI, adminAPI } from '@/lib/firebase';
+import { FaPlus, FaEdit, FaTrash, FaSave, FaTimes, FaSignOutAlt, FaLock, FaKey } from 'react-icons/fa';
+import { projectsAPI, adminAPI, configAPI } from '@/lib/firebase';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -35,6 +35,11 @@ export default function AdminPage() {
     description: ''
   });
   const [submitLoading, setSubmitLoading] = useState(false);
+  
+  // AI Key Management States
+  const [geminiKeyInput, setGeminiKeyInput] = useState('');
+  const [geminiSaveLoading, setGeminiSaveLoading] = useState(false);
+  const [geminiSaveStatus, setGeminiSaveStatus] = useState<'success' | 'error' | null>(null);
 
   // Check auth state on load
   useEffect(() => {
@@ -48,8 +53,34 @@ export default function AdminPage() {
   useEffect(() => {
     if (isAuthenticated) {
       fetchProjects();
+      fetchGeminiKey();
     }
   }, [isAuthenticated]);
+
+  const fetchGeminiKey = async () => {
+    try {
+      const key = await configAPI.getGeminiKey();
+      setGeminiKeyInput(key || '');
+    } catch (error) {
+      console.error('Error fetching Gemini Key:', error);
+    }
+  };
+
+  const handleSaveGeminiKey = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setGeminiSaveLoading(true);
+    setGeminiSaveStatus(null);
+    try {
+      await configAPI.setGeminiKey(geminiKeyInput);
+      setGeminiSaveStatus('success');
+      setTimeout(() => setGeminiSaveStatus(null), 4000);
+    } catch (error) {
+      console.error('Error saving Gemini Key:', error);
+      setGeminiSaveStatus('error');
+    } finally {
+      setGeminiSaveLoading(false);
+    }
+  };
 
   const fetchProjects = async () => {
     try {
@@ -260,6 +291,60 @@ export default function AdminPage() {
             {showForm ? <FaTimes /> : <FaPlus />}
             <span>{showForm ? 'Cancel Operation' : 'Add New Project'}</span>
           </button>
+        </div>
+
+        {/* AI Chatbot Configuration */}
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-12 shadow-xl">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400">
+              <FaKey size={18} />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-white">إعدادات مفتاح الذكاء الاصطناعي (Gemini API Key)</h2>
+              <p className="text-sm text-slate-400">تحديث مفتاح API لضمان عمل بوت المحادثة الذكي باستمرار عند نفاد الحصص المجانية.</p>
+            </div>
+          </div>
+
+          <form onSubmit={handleSaveGeminiKey} className="flex flex-col sm:flex-row items-end gap-4 max-w-3xl">
+            <div className="flex-1 w-full">
+              <label className="block text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wide">Gemini API Key</label>
+              <input
+                type="password"
+                value={geminiKeyInput}
+                onChange={(e) => setGeminiKeyInput(e.target.value)}
+                placeholder="AIzaSy..."
+                required
+                className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all font-mono"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={geminiSaveLoading}
+              className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold h-[48px] px-8 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/20 transition-all w-full sm:w-auto shrink-0 cursor-pointer"
+            >
+              {geminiSaveLoading ? <Loader2 className="animate-spin w-5 h-5" /> : <FaSave />}
+              <span>حفظ المفتاح</span>
+            </button>
+          </form>
+
+          {geminiSaveStatus === 'success' && (
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-emerald-400 text-sm mt-3 font-semibold"
+            >
+              ✓ تم حفظ مفتاح الـ API بنجاح في قاعدة البيانات وتحديث النظام تلقائياً.
+            </motion.p>
+          )}
+          {geminiSaveStatus === 'error' && (
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-red-400 text-sm mt-3 font-semibold"
+            >
+              ✗ فشل حفظ المفتاح. يرجى التحقق من اتصال الإنترنت وقواعد Firestore.
+            </motion.p>
+          )}
         </div>
 
         <AnimatePresence>

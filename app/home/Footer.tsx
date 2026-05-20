@@ -85,7 +85,7 @@ export default function Footer() {
             </div>
 
             {/* زرار خمسات مخصص مع إضاءة دائمة */}
-            <a href="https://khamsat.com/programming/custom-website-development/2959182" target="_blank" rel="noopener noreferrer"
+            <a href="https://khamsat.com/programming/custom-website-development/4251679" target="_blank" rel="noopener noreferrer"
               className="mt-2 group flex items-center gap-3 px-6 py-3 rounded-2xl bg-emerald-500/5 border border-emerald-500/20 hover:bg-emerald-500/10 hover:border-emerald-500/40 shadow-[0_0_25px_rgba(16,185,129,0.15)] hover:shadow-[0_0_35px_rgba(16,185,129,0.3)] transition-all duration-500">
               <span className="text-emerald-400 font-bold text-sm tracking-wide transition-colors">Hire me on Khamsat</span>
               <ExternalLink size={16} className="text-emerald-500/60 group-hover:text-emerald-400 transition-colors" />

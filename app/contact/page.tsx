@@ -54,7 +54,7 @@ export default function ContactPage() {
                <a href="https://www.linkedin.com/in/ahmed-abd-elgwad" target="_blank" rel="noreferrer" className="w-14 h-14 flex items-center justify-center rounded-2xl bg-zinc-900 border border-white/5 text-zinc-400 hover:text-white hover:bg-[#0A66C2] hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(10,102,194,0.4)] transition-all duration-300">
                  <FaLinkedin size={22} />
                </a>
-               <a href="https://khamsat.com/programming/custom-website-development/2959182" target="_blank" rel="noreferrer" title="Khamsat" className="relative w-14 h-14 flex items-center justify-center rounded-2xl bg-zinc-900 border border-white/5 text-zinc-400 hover:text-white hover:bg-[#1dbfa0] hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(29,191,160,0.5)] transition-all duration-300 group overflow-hidden">
+               <a href="https://khamsat.com/programming/custom-website-development/4251679" target="_blank" rel="noreferrer" title="Khamsat" className="relative w-14 h-14 flex items-center justify-center rounded-2xl bg-zinc-900 border border-white/5 text-zinc-400 hover:text-white hover:bg-[#1dbfa0] hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(29,191,160,0.5)] transition-all duration-300 group overflow-hidden">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(29,191,160,0.4)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                   <span className="font-extrabold text-2xl group-hover:scale-110 transition-transform relative z-10 font-sans">5</span>
                </a>

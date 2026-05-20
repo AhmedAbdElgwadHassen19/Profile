@@ -8,6 +8,7 @@ import {
   updateDoc,
   deleteDoc,
   getDoc,
+  setDoc,
   DocumentData,
   CollectionReference,
 } from 'firebase/firestore';
@@ -56,6 +57,19 @@ export const projectsAPI = {
   }
 };
 
+export const configAPI = {
+  getGeminiKey: async () => {
+    const ref = doc(db, 'config', 'gemini');
+    const snap = await getDoc(ref);
+    return snap.exists() ? snap.data().apiKey : '';
+  },
+  setGeminiKey: async (apiKey: string) => {
+    const ref = doc(db, 'config', 'gemini');
+    await setDoc(ref, { apiKey, updatedAt: new Date() });
+    return true;
+  }
+};
+
 export const adminAPI = {
   login: async ({ email, password }: any) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -64,4 +78,4 @@ export const adminAPI = {
 };
 
 export { db, auth };
-export default { projectsAPI, adminAPI };
+export default { projectsAPI, adminAPI, configAPI };
