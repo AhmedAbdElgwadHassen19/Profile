@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaPlus, FaEdit, FaTrash, FaSave, FaTimes, FaSignOutAlt, FaLock, FaKey } from 'react-icons/fa';
-import { projectsAPI, adminAPI, configAPI } from '@/lib/firebase';
+import { FaPlus, FaEdit, FaTrash, FaSave, FaTimes, FaSignOutAlt, FaLock, FaKey, FaComments, FaChevronDown, FaChevronUp, FaUser, FaRobot } from 'react-icons/fa';
+import { projectsAPI, adminAPI, configAPI, chatsAPI } from '@/lib/firebase';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -41,6 +41,12 @@ export default function AdminPage() {
   const [geminiSaveLoading, setGeminiSaveLoading] = useState(false);
   const [geminiSaveStatus, setGeminiSaveStatus] = useState<'success' | 'error' | null>(null);
 
+  // Chat Sessions States
+  const [chatSessions, setChatSessions] = useState<any[]>([]);
+  const [chatLoading, setChatLoading] = useState(false);
+  const [expandedSession, setExpandedSession] = useState<string | null>(null);
+  const [sessionMessages, setSessionMessages] = useState<Record<string, any[]>>({});
+
   // Check auth state on load
   useEffect(() => {
     const authStatus = localStorage.getItem('is_admin_authenticated');
@@ -54,6 +60,7 @@ export default function AdminPage() {
     if (isAuthenticated) {
       fetchProjects();
       fetchGeminiKey();
+      fetchChatSessions();
     }
   }, [isAuthenticated]);
 
@@ -63,6 +70,34 @@ export default function AdminPage() {
       setGeminiKeyInput(key || '');
     } catch (error) {
       console.error('Error fetching Gemini Key:', error);
+    }
+  };
+
+  const fetchChatSessions = async () => {
+    try {
+      setChatLoading(true);
+      const sessions = await chatsAPI.getAllSessions();
+      setChatSessions(sessions);
+    } catch (error) {
+      console.error('Error fetching chat sessions:', error);
+    } finally {
+      setChatLoading(false);
+    }
+  };
+
+  const toggleSession = async (sessionId: string) => {
+    if (expandedSession === sessionId) {
+      setExpandedSession(null);
+      return;
+    }
+    setExpandedSession(sessionId);
+    if (!sessionMessages[sessionId]) {
+      try {
+        const msgs = await chatsAPI.getSessionMessages(sessionId);
+        setSessionMessages(prev => ({ ...prev, [sessionId]: msgs }));
+      } catch (error) {
+        console.error('Error fetching session messages:', error);
+      }
     }
   };
 
@@ -502,6 +537,113 @@ export default function AdminPage() {
             </div>
           )}
         </div>
+
+        {/* Chat Sessions Section */}
+        <div className="mt-16 space-y-6">
+          <h2 className="text-xl font-bold text-slate-400 uppercase tracking-widest flex items-center gap-4">
+            <FaComments className="text-indigo-400" />
+            محادثات العملاء ({chatSessions.length})
+            <div className="h-[1px] flex-1 bg-slate-800"></div>
+            <button
+              onClick={fetchChatSessions}
+              className="text-xs text-indigo-400 hover:text-indigo-300 font-semibold px-3 py-1 rounded-lg bg-indigo-500/10 border border-indigo-500/20 transition-colors"
+            >
+              تحديث
+            </button>
+          </h2>
+
+          {chatLoading ? (
+            <div className="flex justify-center py-12">
+              <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
+            </div>
+          ) : chatSessions.length === 0 ? (
+            <div className="text-center py-16 border border-dashed border-slate-800 rounded-3xl bg-slate-900/20">
+              <FaComments className="text-4xl text-slate-700 mx-auto mb-3" />
+              <p className="text-slate-500">لا توجد محادثات بعد. ستظهر هنا عند تفاعل العملاء مع البوت.</p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {chatSessions.map((session: any) => (
+                <div key={session.id} className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+                  {/* Session Header */}
+                  <button
+                    onClick={() => toggleSession(session.id)}
+                    className="w-full flex items-center justify-between p-5 hover:bg-slate-800/50 transition-colors text-right"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 shrink-0">
+                        <FaComments size={16} />
+                      </div>
+                      <div className="text-right">
+                        <p className="text-white font-semibold text-sm">
+                          {session.id?.slice(0, 30)}...
+                        </p>
+                        <p className="text-slate-400 text-xs mt-0.5 line-clamp-1 max-w-xs">
+                          آخر رسالة: {session.lastMessage || '—'}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4 shrink-0">
+                      <span className="text-xs text-slate-500 bg-slate-800 px-2 py-1 rounded-lg">
+                        {session.messagesCount} رسالة
+                      </span>
+                      {expandedSession === session.id ? (
+                        <FaChevronUp className="text-slate-400" />
+                      ) : (
+                        <FaChevronDown className="text-slate-400" />
+                      )}
+                    </div>
+                  </button>
+
+                  {/* Session Messages */}
+                  <AnimatePresence>
+                    {expandedSession === session.id && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="overflow-hidden border-t border-slate-800"
+                      >
+                        <div className="p-5 space-y-3 max-h-96 overflow-y-auto" dir="rtl">
+                          {!sessionMessages[session.id] ? (
+                            <div className="flex justify-center py-4">
+                              <Loader2 className="w-5 h-5 text-indigo-400 animate-spin" />
+                            </div>
+                          ) : sessionMessages[session.id].length === 0 ? (
+                            <p className="text-slate-500 text-sm text-center py-4">لا توجد رسائل</p>
+                          ) : (
+                            sessionMessages[session.id].map((msg: any) => (
+                              <div
+                                key={msg.id}
+                                className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
+                              >
+                                <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-xs ${
+                                  msg.role === 'user'
+                                    ? 'bg-indigo-600 text-white'
+                                    : 'bg-slate-700 text-slate-300'
+                                }`}>
+                                  {msg.role === 'user' ? <FaUser size={10} /> : <FaRobot size={10} />}
+                                </div>
+                                <div className={`max-w-[75%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
+                                  msg.role === 'user'
+                                    ? 'bg-indigo-600 text-white rounded-br-none'
+                                    : 'bg-slate-800 text-slate-200 border border-slate-700 rounded-bl-none'
+                                }`}>
+                                  {msg.content}
+                                </div>
+                              </div>
+                            ))
+                          )}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
       </main>
     </div>
   );

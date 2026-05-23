@@ -9,8 +9,12 @@ import {
   deleteDoc,
   getDoc,
   setDoc,
+  orderBy,
+  query,
+  limit,
   DocumentData,
   CollectionReference,
+  serverTimestamp,
 } from 'firebase/firestore';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
@@ -77,5 +81,45 @@ export const adminAPI = {
   }
 };
 
+export const chatsAPI = {
+  // Save a full conversation session
+  saveSession: async (sessionId: string, messages: { role: string; content: string }[]) => {
+    const ref = doc(db, 'chats', sessionId);
+    await setDoc(ref, {
+      sessionId,
+      messagesCount: messages.length,
+      lastMessage: messages[messages.length - 1]?.content?.slice(0, 100) || '',
+      updatedAt: serverTimestamp(),
+    }, { merge: true });
+
+    // Save each message in subcollection
+    const messagesCol = collection(db, 'chats', sessionId, 'messages');
+    for (const msg of messages) {
+      await addDoc(messagesCol, {
+        role: msg.role,
+        content: msg.content,
+        timestamp: serverTimestamp(),
+      });
+    }
+  },
+
+  // Get all sessions (for admin view)
+  getAllSessions: async () => {
+    const q = query(collection(db, 'chats'), orderBy('updatedAt', 'desc'), limit(50));
+    const snap = await getDocs(q);
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  },
+
+  // Get messages for a specific session
+  getSessionMessages: async (sessionId: string) => {
+    const q = query(
+      collection(db, 'chats', sessionId, 'messages'),
+      orderBy('timestamp', 'asc')
+    );
+    const snap = await getDocs(q);
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  },
+};
+
 export { db, auth };
-export default { projectsAPI, adminAPI, configAPI };
+export default { projectsAPI, adminAPI, configAPI, chatsAPI };

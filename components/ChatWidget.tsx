@@ -101,7 +101,14 @@ export default function ChatWidget() {
       });
 
       if (!response.ok) {
-        throw new Error("API network response was not ok");
+        // Handle specific error codes
+        if (response.status === 429) {
+          throw new Error("RATE_LIMIT");
+        } else if (response.status === 500) {
+          throw new Error("SERVER_ERROR");
+        } else {
+          throw new Error("API network response was not ok");
+        }
       }
 
       const result = await response.json();
@@ -119,11 +126,22 @@ export default function ChatWidget() {
       }
     } catch (error) {
       console.error("Error communicating with chat API:", error);
+      
+      let errorMessage = "عذراً، حدث خطأ أثناء الاتصال. يرجى المحاولة مرة أخرى لاحقاً، أو التواصل مباشرة مع أحمد عبر الواتساب: https://wa.me/201201302871";
+      
+      if (error instanceof Error) {
+        if (error.message === "RATE_LIMIT") {
+          errorMessage = "عذراً، تم تجاوز الحد المسموح من الطلبات حالياً. يرجى الانتظار قليلاً ثم المحاولة مرة أخرى، أو التواصل مباشرة مع أحمد على الواتساب: https://wa.me/201201302871";
+        } else if (error.message === "SERVER_ERROR") {
+          errorMessage = "عذراً، حدث خطأ في الخادم. للتواصل الفوري مع أحمد، استخدم الواتساب: https://wa.me/201201302871 أو البريد الإلكتروني: aa1019914@gmail.com";
+        }
+      }
+      
       setMessages((prev) => [
         ...prev,
         {
           role: "model",
-          content: "عذراً، حدث خطأ أثناء الاتصال بالخادم. يرجى المحاولة مرة أخرى لاحقاً، أو التواصل مباشرة مع المطور أحمد عبر البريد الإلكتروني أو الواتساب الموضحين في صفحة اتصل بنا.",
+          content: errorMessage,
         },
       ]);
     } finally {
