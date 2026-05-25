@@ -8,6 +8,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Loader2, ArrowLeft } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface Project {
   _id?: string;
@@ -102,20 +103,31 @@ export default function AdminPage() {
   };
 
   const handleDeleteSession = async (sessionId: string) => {
-    if (!window.confirm('هل أنت متأكد من حذف هذه المحادثة نهائياً؟')) return;
-    try {
-      await chatsAPI.deleteSession(sessionId);
-      setChatSessions(prev => prev.filter(s => s.id !== sessionId));
-      setSessionMessages(prev => {
-        const updated = { ...prev };
-        delete updated[sessionId];
-        return updated;
-      });
-      if (expandedSession === sessionId) setExpandedSession(null);
-    } catch (error) {
-      console.error('Error deleting session:', error);
-      alert('فشل الحذف. حاول مرة أخرى.');
-    }
+    toast('هل أنت متأكد من حذف هذه المحادثة نهائياً؟', {
+      action: {
+        label: 'حذف',
+        onClick: async () => {
+          try {
+            await chatsAPI.deleteSession(sessionId);
+            setChatSessions(prev => prev.filter(s => s.id !== sessionId));
+            setSessionMessages(prev => {
+              const updated = { ...prev };
+              delete updated[sessionId];
+              return updated;
+            });
+            if (expandedSession === sessionId) setExpandedSession(null);
+            toast.success('تم حذف المحادثة بنجاح');
+          } catch (error) {
+            console.error('Error deleting session:', error);
+            toast.error('فشل الحذف. حاول مرة أخرى.');
+          }
+        },
+      },
+      cancel: {
+        label: 'إلغاء',
+        onClick: () => {},
+      },
+    });
   };
 
   const handleSaveGeminiKey = async (e: React.FormEvent) => {

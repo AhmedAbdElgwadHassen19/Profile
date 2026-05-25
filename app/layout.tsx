@@ -6,6 +6,7 @@ import BottomTabNav from "./home/BottomTabNav";
 import Footer from "./home/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import ChatWidget from "@/components/ChatWidget";
+import { Toaster } from "sonner";
 
 // 1. إعداد الخطوط - ربطنا Jakarta بمتغير --font-geist-sans عشان يقرأ من globals.css اللي عندك
 const jakarta = Plus_Jakarta_Sans({
@@ -88,6 +89,7 @@ export default function RootLayout({
         <Footer />
         <ScrollToTop />
         <ChatWidget />
+        <Toaster position="top-center" richColors closeButton />
       </body>
     </html>
   );
