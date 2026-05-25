@@ -105,19 +105,38 @@ export default function ProjectsSection() {
       try {
         const response = await projectsAPI.getAll();
         const allProjects = response.data as Project[];
-        
-        // المبدأ: هناخد أول 3 مشاريع، لكن هنخلي المشروع التاني هو "Flowers Brand"
-        let featured = allProjects.slice(0, 3);
-        
-        // البحث عن مشروع Flowers Brand (سواء بالاسم أو لو هو رقم 6 في القائمة)
-        const flowersProject = allProjects.find(p => p.title.toLowerCase().includes('flowers')) || allProjects[5];
-        
-        if (flowersProject && featured.length >= 2) {
-          // استبدال المشروع الثاني بمشروع Flowers
-          featured[1] = flowersProject;
+
+        // البحث عن المشاريع المطلوبة بالاسم
+        const targetNames = [
+          'learning center',
+          'E-Commerce',
+          'real estate',
+          'real_estate',
+        ];
+
+        const findProject = (keyword: string) =>
+          allProjects.find((p) =>
+            p.title.toLowerCase().includes(keyword.toLowerCase())
+          );
+
+        const learningCenter = findProject('learning');
+        const eCommerce = findProject('E-Commerce');
+        const realEstate =
+          findProject('real estate') || findProject('real_estate');
+
+        // نبني القائمة بالترتيب المطلوب، ونحذف الـ undefined
+        const featured = [learningCenter, eCommerce, realEstate].filter(
+          Boolean
+        ) as Project[];
+
+        // لو مش لاقي الـ 3 بالاسم، نكمّل من باقي المشاريع
+        if (featured.length < 3) {
+          const usedIds = new Set(featured.map((p) => p._id));
+          const remaining = allProjects.filter((p) => !usedIds.has(p._id));
+          featured.push(...remaining.slice(0, 3 - featured.length));
         }
-        
-        setProjects(featured);
+
+        setProjects(featured.slice(0, 3));
       } catch (error) {
         console.error("Error fetching projects:", error);
       } finally {
