@@ -101,6 +101,23 @@ export default function AdminPage() {
     }
   };
 
+  const handleDeleteSession = async (sessionId: string) => {
+    if (!window.confirm('هل أنت متأكد من حذف هذه المحادثة نهائياً؟')) return;
+    try {
+      await chatsAPI.deleteSession(sessionId);
+      setChatSessions(prev => prev.filter(s => s.id !== sessionId));
+      setSessionMessages(prev => {
+        const updated = { ...prev };
+        delete updated[sessionId];
+        return updated;
+      });
+      if (expandedSession === sessionId) setExpandedSession(null);
+    } catch (error) {
+      console.error('Error deleting session:', error);
+      alert('فشل الحذف. حاول مرة أخرى.');
+    }
+  };
+
   const handleSaveGeminiKey = async (e: React.FormEvent) => {
     e.preventDefault();
     setGeminiSaveLoading(true);
@@ -566,34 +583,44 @@ export default function AdminPage() {
               {chatSessions.map((session: any) => (
                 <div key={session.id} className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
                   {/* Session Header */}
-                  <button
-                    onClick={() => toggleSession(session.id)}
-                    className="w-full flex items-center justify-between p-5 hover:bg-slate-800/50 transition-colors text-right"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 shrink-0">
-                        <FaComments size={16} />
+                  <div className="flex items-center">
+                    <button
+                      onClick={() => toggleSession(session.id)}
+                      className="flex-1 flex items-center justify-between p-5 hover:bg-slate-800/50 transition-colors text-right"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 shrink-0">
+                          <FaComments size={16} />
+                        </div>
+                        <div className="text-right">
+                          <p className="text-white font-semibold text-sm">
+                            {session.id?.slice(0, 30)}...
+                          </p>
+                          <p className="text-slate-400 text-xs mt-0.5 line-clamp-1 max-w-xs">
+                            آخر رسالة: {session.lastMessage || '—'}
+                          </p>
+                        </div>
                       </div>
-                      <div className="text-right">
-                        <p className="text-white font-semibold text-sm">
-                          {session.id?.slice(0, 30)}...
-                        </p>
-                        <p className="text-slate-400 text-xs mt-0.5 line-clamp-1 max-w-xs">
-                          آخر رسالة: {session.lastMessage || '—'}
-                        </p>
+                      <div className="flex items-center gap-4 shrink-0">
+                        <span className="text-xs text-slate-500 bg-slate-800 px-2 py-1 rounded-lg">
+                          {session.messagesCount} رسالة
+                        </span>
+                        {expandedSession === session.id ? (
+                          <FaChevronUp className="text-slate-400" />
+                        ) : (
+                          <FaChevronDown className="text-slate-400" />
+                        )}
                       </div>
-                    </div>
-                    <div className="flex items-center gap-4 shrink-0">
-                      <span className="text-xs text-slate-500 bg-slate-800 px-2 py-1 rounded-lg">
-                        {session.messagesCount} رسالة
-                      </span>
-                      {expandedSession === session.id ? (
-                        <FaChevronUp className="text-slate-400" />
-                      ) : (
-                        <FaChevronDown className="text-slate-400" />
-                      )}
-                    </div>
-                  </button>
+                    </button>
+                    {/* Delete Button */}
+                    <button
+                      onClick={() => handleDeleteSession(session.id)}
+                      title="حذف المحادثة نهائياً"
+                      className="p-5 text-slate-600 hover:text-red-400 hover:bg-red-500/5 transition-colors shrink-0"
+                    >
+                      <FaTrash size={14} />
+                    </button>
+                  </div>
 
                   {/* Session Messages */}
                   <AnimatePresence>

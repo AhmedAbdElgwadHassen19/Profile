@@ -119,6 +119,16 @@ export const chatsAPI = {
     const snap = await getDocs(q);
     return snap.docs.map(d => ({ id: d.id, ...d.data() }));
   },
+
+  // Delete a session and all its messages
+  deleteSession: async (sessionId: string) => {
+    // Delete all messages in subcollection first
+    const messagesSnap = await getDocs(collection(db, 'chats', sessionId, 'messages'));
+    const deletions = messagesSnap.docs.map(d => deleteDoc(d.ref));
+    await Promise.all(deletions);
+    // Delete the session document itself
+    await deleteDoc(doc(db, 'chats', sessionId));
+  },
 };
 
 export { db, auth };
