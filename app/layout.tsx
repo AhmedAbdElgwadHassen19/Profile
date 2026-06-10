@@ -7,6 +7,7 @@ import Footer from "./home/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import ChatWidget from "@/components/ChatWidget";
 import { Toaster } from "sonner";
+import Script from "next/script";
 
 // 1. إعداد الخطوط - ربطنا Jakarta بمتغير --font-geist-sans عشان يقرأ من globals.css اللي عندك
 const jakarta = Plus_Jakarta_Sans({
@@ -90,6 +91,14 @@ export default function RootLayout({
         <ScrollToTop />
         <ChatWidget />
         <Toaster position="top-center" richColors closeButton />
+        {/* Microsoft Clarity Analytics */}
+        <Script id="microsoft-clarity" strategy="afterInteractive">
+          {`(function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+          })(window, document, "clarity", "script", "x4v7v3a0dq");`}
+        </Script>
       </body>
     </html>
   );
