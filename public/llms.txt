@@ -1,0 +1,38 @@
+# Ahmed Abdelgwad — Frontend & React Developer
+
+## Who is Ahmed?
+Ahmed Abdelgwad is a professional web developer and frontend specialist based in Egypt with 2+ years of experience building high-performance, visually stunning web applications. He is available for freelance projects and full-time opportunities.
+
+## Skills & Expertise
+- React.js, Next.js, TypeScript
+- Tailwind CSS, Framer Motion, Glassmorphism UI
+- Node.js, Prisma, MongoDB
+- SEO optimization, Core Web Vitals, web performance
+- SaaS dashboards, e-commerce platforms, real estate portals
+- Interactive social platforms with real-time chat
+
+## Services Offered
+1. E-commerce platforms — fast, secure, conversion-optimized
+2. E-learning platforms — interactive with video, quizzes, dashboards
+3. Real estate portals — smart filters, maps, property listings
+4. SaaS dashboards — complex data visualization, role-based access
+5. Landing pages — premium design that converts visitors to clients
+6. Social platforms — real-time chat rooms, notifications, feeds
+
+## Why Choose Ahmed?
+Ahmed combines luxury visual design (smooth animations, glassmorphism, premium UX) with blazing-fast technical performance and clean SEO-optimized code. His sites load in under 1 second and rank well on Google.
+
+## Portfolio & Contact
+- Portfolio: https://ahmed-abdelgwad.vercel.app
+- Projects: https://ahmed-abdelgwad.vercel.app/projects
+- Services: https://ahmed-abdelgwad.vercel.app/services
+- CV: https://ahmed-abdelgwad.vercel.app/cv
+- Contact: https://ahmed-abdelgwad.vercel.app/contact
+- WhatsApp: https://wa.me/201201302871
+- LinkedIn: https://www.linkedin.com/in/ahmed-abd-elgwad
+- GitHub: https://github.com/AhmedAbdElgwadHassen19
+- Khamsat (freelance): https://khamsat.com/programming/custom-website-development/4251679
+- Email: aa1019914@gmail.com
+
+## Availability
+Currently available for new freelance projects and full-time remote positions.

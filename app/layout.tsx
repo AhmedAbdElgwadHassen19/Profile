@@ -23,23 +23,19 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ahmed-abdelgwad.vercel.app"),
-  title: "Ahmed - Web Developer",
-  description: "أحمد عبد الجواد - مطور ويب متخصص في بناء واجهات أمامية احترافية باستخدام React و Next.js. خبير في تصميم تجارب مستخدم فخمة وأداء عالي. Crafting high-performance, visually stunning web experiences.",
-  keywords: [
-    "Ahmed Abdelgwad", "أحمد عبد الجواد",
-    "Web Developer", "مطور واجهات أمامية",
-    "Creative Developer", "مطور ويب مبدع",
-    "React Specialist", "خبير رياكت",
-    "Next.js Expert", "خبير نكست جي إس",
-    "UI/UX Designer", "مصمم واجهات مستخدم",
-    "Full Stack Development", "تطوير ويب متكامل",
-    "Software Engineer Portfolio", "معرض أعمال مهندس برمجيات",
-    "Modern Web Design", "تصميم ويب حديث",
-    "SaaS Builder", "بناء تطبيقات سحابية",
-    "SEO Expert", "تحسين محركات البحث",
-    "Web Performance", "أداء المواقع",
-    "مترجم برمجيات", "Freelance Developer Egypt", "مطور فريلانس"
-  ],
+  title: {
+    default: "Ahmed Abdelgwad — Frontend & React Developer",
+    template: "%s | Ahmed Abdelgwad",
+  },
+  description: "Ahmed Abdelgwad is a Frontend & React specialist with 2+ years experience building high-performance web apps using Next.js, TypeScript & Tailwind CSS. Available for freelance projects.",
+  authors: [{ name: "Ahmed Abdelgwad", url: "https://ahmed-abdelgwad.vercel.app" }],
+  creator: "Ahmed Abdelgwad",
+  publisher: "Ahmed Abdelgwad",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
   icons: {
     icon: [
       { url: "/my.jpg", sizes: "32x32", type: "image/jpeg" },
@@ -48,8 +44,8 @@ export const metadata: Metadata = {
     apple: "/my.jpg",
   },
   openGraph: {
-    title: "Eng/Ahmed - Web Developer",
-    description: "Explore the portfolio of Ahmed Abdelgwad, a frontend engineer dedicated to building premium digital products.",
+    title: "Ahmed Abdelgwad — Frontend & React Developer",
+    description: "Building high-performance, visually stunning web applications. Available for freelance projects.",
     url: "https://ahmed-abdelgwad.vercel.app",
     siteName: "Ahmed Abdelgwad",
     images: [
@@ -57,7 +53,7 @@ export const metadata: Metadata = {
         url: "/my.jpg",
         width: 1200,
         height: 630,
-        alt: "Ahmed Abdelgwad - Software Engineer",
+        alt: "Ahmed Abdelgwad - Frontend Developer",
       },
     ],
     locale: "en_US",
@@ -65,7 +61,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ahmed Abdelgwad — Digital Architect",
+    title: "Ahmed Abdelgwad — Frontend & React Developer",
     description: "Frontend Engineer & UI Specialist building the future of the web.",
     images: ["/my.jpg"],
   },
@@ -98,6 +94,38 @@ export default function RootLayout({
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
           })(window, document, "clarity", "script", "x4v7v3a0dq");`}
+        </Script>
+        {/* JSON-LD Structured Data — helps Google & AI understand who Ahmed is */}
+        <Script id="json-ld-person" type="application/ld+json" strategy="beforeInteractive">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Ahmed Abdelgwad",
+            "alternateName": "أحمد عبد الجواد",
+            "url": "https://ahmed-abdelgwad.vercel.app",
+            "image": "https://ahmed-abdelgwad.vercel.app/my.jpg",
+            "jobTitle": "Frontend & React Developer",
+            "description": "Professional web developer specializing in React.js, Next.js, and TypeScript. Building high-performance, visually stunning web applications with 2+ years of experience.",
+            "email": "aa1019914@gmail.com",
+            "telephone": "+201201302871",
+            "nationality": "Egyptian",
+            "knowsAbout": [
+              "React.js", "Next.js", "TypeScript", "Tailwind CSS",
+              "Node.js", "MongoDB", "Prisma", "Framer Motion",
+              "SEO Optimization", "Web Performance", "SaaS Development",
+              "E-commerce Development", "UI/UX Design"
+            ],
+            "sameAs": [
+              "https://www.linkedin.com/in/ahmed-abd-elgwad",
+              "https://github.com/AhmedAbdElgwadHassen19",
+              "https://khamsat.com/programming/custom-website-development/4251679"
+            ],
+            "offers": {
+              "@type": "Offer",
+              "description": "Freelance web development services including e-commerce, SaaS, landing pages, real estate portals, and e-learning platforms.",
+              "url": "https://ahmed-abdelgwad.vercel.app/services"
+            }
+          })}
         </Script>
       </body>
     </html>
